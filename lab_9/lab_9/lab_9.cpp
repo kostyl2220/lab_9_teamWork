@@ -97,7 +97,7 @@ int ReadFromBinaryFile(const char *path, Furniture *furn) {
 		fread(furn + i++, sizeof(Furniture), 1, f);
 	}
 	fclose(f);
-	return i;
+	return i - 1;
 }
 
 void outCollection(Furniture *furn, int count) {
