@@ -64,7 +64,7 @@ int _tmain(int argc, _TCHAR* argv[])  //short main method
 {
 	Furniture furn[COUNT]; //Lets leave all jokes about "short" :(
 	mainMenu(furn);
-	system("pause");//and my English
+	//system("pause");//and my English																					  //COMENTED SYSTEM
 	return 0;//I hope, nobody died while I was writing it.
 }
 
@@ -88,7 +88,7 @@ void mainMenu(Furniture *furn){ //menu with points
 		printf("\t0.Write to file\n");
 		printf("\tq.Exit\n");
 		char ch = _getch();
-		system("cls");
+		//system("cls");																								  //COMENTED SYSTEM
 		switch (ch)
 		{
 		case '1':
@@ -248,7 +248,7 @@ void editElement(Furniture* furn, int count) {
 }
 
 void firstTask(Furniture *furn, int count) {
-	system("cls");
+	//system("cls");																						 //COMENTED SYSTEM
 	printf("First task.\n");
 	printf("Enter the type of chair: ");
 	char type[MAX_LEN];
@@ -271,7 +271,7 @@ void secondTask(Furniture* furn, int count){
 }
 
 void thirdTask(Furniture *furn, int count){ //My task, I dont want to discuss it
-	system("cls");
+	//system("cls");																						  //COMENTED SYSTEM
 	printf("Third task.\n");  // or want
 	printf("Enter the name of new file: ");
 	char path[MAX_LEN]; //hihi
