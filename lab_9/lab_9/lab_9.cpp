@@ -43,9 +43,95 @@ struct List{  //we can delete it, but I can't kill my child
 
 const int COUNT = 10;
 
+void mainMenu(Furniture*); //all prototypes placed in right sequence 
+int fillCollection(Furniture*);  //all of them placed under main
+void outCollection(Furniture*, int);  //find yours enpty
+void addElement(Furniture*, int&);  //end fill it
+void deleteElement(Furniture*, int&);  //for Nastya I will coment all system commands
+void editElement(Furniture*, int);
+void firstTask(Furniture*, int);
+void secondTask(Furniture*, int);
+void thirdTask(Furniture*, int);
+int ReadFromBinaryFile(Furniture *furn);
+void writeToBinaryFile(Furniture *furn, int count);
+
+
+
+//_____________________________________MAIN METHOD______________________________________
+
+
+int _tmain(int argc, _TCHAR* argv[])  //short main method
+{
+	Furniture furn[COUNT]; //Lets leave all jokes about "short" :(
+	mainMenu(furn);
+	system("pause");//and my English
+	return 0;//I hope, nobody died while I was writing it.
+}
+
+
+//_____________________________________________ADDITIONAL METHODS_____________________________
+
+
+void mainMenu(Furniture *furn){ //menu with points
+	int count = 0;
+	while (true) {
+		printf("Menu:\n");
+		printf("\t1.Fill collection\n");
+		printf("\t2.Print collection\n");
+		printf("\t3.Add element to collection\n"); //TODO...
+		printf("\t4.Delete element of collection\n");//TODO...
+		printf("\t5.Editing element of collection\n");//TODO-
+		printf("\t6.First task\n");
+		printf("\t7.Second task\n");//TODO
+		printf("\t8.Third task\n");  //TODODODOOOOOOO... TODODODO (it's song) you should do 5 tasks above
+		printf("\t9.Read from file\n");
+		printf("\t0.Write to file\n");
+		printf("\tq.Exit\n");
+		char ch = _getch();
+		system("cls");
+		switch (ch)
+		{
+		case '1':
+			count = fillCollection(furn);  //and add your cases there
+			break;
+		case '2':
+			outCollection(furn, count); //with your methods
+			break;
+		case '3':
+			addElement(furn, count);
+			break;
+		case '4':
+			deleteElement(furn, count);
+			break;
+		case '5':
+			editElement(furn, count);
+			break;
+		case '6':
+			firstTask(furn, count);
+			break;
+		case '7':
+			secondTask(furn, count);
+			break;
+		case '8':
+			thirdTask(furn, count); //Good like
+			break;
+		case '9':
+			count = ReadFromBinaryFile(furn);//and organise prototypes (Forgot this word)
+			break;
+		case '0':
+			writeToBinaryFile(furn, count);//pleeeease
+			break;
+		case 'q':
+			return; //You is the best, my dove <3
+		default:
+			return;
+		}
+	}
+}
+
 int fillCollection(Furniture *head){ //method for filling collection, my own examples if you, Nastya, cause I sure that Valentin won't read it,
-									//want to scange some names, you are welcome, but don't touch one table, we must have it for my task.
-									//add new items for your one
+	//want to scange some names, you are welcome, but don't touch one table, we must have it for my task.
+	//add new items for your one
 
 	strcpy(head[0].typeMain, "Chair");
 	strcpy(head[0].typeAdd, "bar");
@@ -94,32 +180,6 @@ int fillCollection(Furniture *head){ //method for filling collection, my own exa
 	return 4;//G
 }
 
-void writeToBinaryFile(Furniture *furn, int count) {  //method to write data to new BINARY (Wooooow!!!! Fantastic!!1) file
-	printf("Enter the name of file: ");  // four 
-	char path[MAX_LEN];					//lines
-	gets(path);							//to enter
-	strcat(path, ".dat");				//the name
-
-	FILE *f = fopen(path, "wb");	//opening
-	fwrite(furn, sizeof(Furniture), count, f);  //writing
-	fclose(f); //closing
-}  //fantastic, right?
-
-int ReadFromBinaryFile(Furniture *furn) {  //for reading
-	printf("Enter the name of file: ");  // four 
-	char path[MAX_LEN];					//lines
-	gets(path);							//to enter
-	strcat(path, ".dat");				//the name
-
-	FILE *f = fopen(path, "rb");  //opening
-	int i = 0;
-	while (!feof(f)){  //while not end
-		fread(furn + i++, sizeof(Furniture), 1, f);  //read
-	}
-	fclose(f); //close
-	return i - 1;  //return the size with little feature. Dont ask. It works
-}
-
 void outCollection(Furniture *furn, int count) { // out collection
 	for (int i = 0; i < count; ++i) {
 		printf("Name: %s\nType: %s %s\nMatherial: %s\nColor: %s\nPrice: %d\nCount of product: %d\n\n",
@@ -135,12 +195,87 @@ void outCollection(Furniture *furn, int count) { // out collection
 	}
 }
 
+void addElement(Furniture* furn, int &count) {
+
+}
+
+void deleteElement(Furniture* furn, int &count) {
+
+}
+
+void editElement(Furniture* furn, int count) {
+	int element;
+	printf("Enter the count of element that you want edit: ");
+	scanf("%d", &element);
+	if ((element > 0) && (element <= count))
+	{
+		printf("Enter Name: ");
+		scanf("%s", &furn[element - 1].name);
+		printf("Enter Chair or Table: ");
+		scanf("%s", &furn[element - 1].typeMain);
+		printf("Enter Type: ");
+		scanf("%s", &furn[element - 1].typeAdd);
+		printf("Enter Matherial: ");
+		scanf("%s", &furn[element - 1].matherial);
+		printf("Enter Color: ");
+		scanf("%s", &furn[element - 1].color);
+		printf("Enter Price: ");
+		scanf("%d", &furn[element - 1].price);
+		printf("Enter Count of product: ");
+		scanf("%d", &furn[element - 1].amountOfProduct);
+		if (strcmp(furn[element - 1].typeMain, "Chair") == 0) {
+			printf("Enter Type of back: ");
+			scanf("%s", &furn[element - 1].spec.chair.typeBack);
+			printf("Enter Type of seat: ");
+			scanf("%s", &furn[element - 1].spec.chair.typeSeat);
+			printf("Enter Color of Upholstery: ");
+			scanf("%s", &furn[element - 1].spec.chair.colorUpholstery);
+		}
+		if (strcmp(furn[element - 1].typeMain, "Table") == 0) {
+			printf("Enter Type of table: ");
+			scanf("%s", &furn[element - 1].spec.table.typeTable);
+			printf("Enter Size of table: \n");
+			printf("Enter Height: ");
+			scanf("%d", &furn[element - 1].spec.table.size.height);
+			printf("Enter Width: ");
+			scanf("%d", &furn[element - 1].spec.table.size.width);
+			printf("Enter Lenght: ");
+			scanf("%d", &furn[element - 1].spec.table.size.lenght);
+		}
+	}
+	else
+		printf("You enter incorrect count");
+}
+
+void firstTask(Furniture *furn, int count) {
+	system("cls");
+	printf("First task.\n");
+	printf("Enter the type of chair: ");
+	char type[MAX_LEN];
+	int count_chairs = 0;
+	int price_chairs = 0;
+	gets_s(type);
+	for (int i = 0; i < count; ++i) {
+		if ((strcmp(furn[i].typeMain, "Chair") == 0) &&
+			(strcmp(furn[i].typeAdd, type) == 0)) {
+			count_chairs += furn[i].amountOfProduct;
+			price_chairs += furn[i].price;
+		}
+	}
+	printf("Count of %s chairs is: %d\n", type, count_chairs);
+	printf("Price of %s chairs is: %d\n", type, price_chairs);
+}
+
+void secondTask(Furniture* furn, int count){
+
+}
+
 void thirdTask(Furniture *furn, int count){ //My task, I dont want to discuss it
 	system("cls");
 	printf("Third task.\n");  // or want
 	printf("Enter the name of new file: ");
 	char path[MAX_LEN]; //hihi
-	gets(path);
+	gets_s(path);
 	strcat(path, ".dat");  //enter the name of file
 
 	outCollection(furn, count);  //out collection to choose proper size of table
@@ -162,53 +297,33 @@ void thirdTask(Furniture *furn, int count){ //My task, I dont want to discuss it
 	fclose(f); //close file
 }
 
-void mainMenu(Furniture *furn){ //menu with points
-	int count = 0;
-	while (true) {
-		printf("Menu:\n");
-		printf("\t1.Fill collection\n");
-		printf("\t2.Print collection\n");
-		printf("\t3.Add element to collection\n"); //TODO...
-		printf("\t4.Delete element of collection\n");//TODO...
-		printf("\t5.Editing element of collection\n");//TODO-
-		printf("\t6.First task\n");//TODO-
-		printf("\t7.Second task\n");//TODO
-		printf("\t8.Third task\n");  //TODODODOOOOOOO... TODODODO (it's song) you should do 5 tasks above
-		printf("\t9.Read from file\n");
-		printf("\t0.Write to file\n");
-		printf("\tq.Exit\n");
-		char ch = _getch();
-		system("cls");
-		switch (ch)
-		{
-		case '1':
-			count = fillCollection(furn);  //and add your cases there
-			break;
-		case '2':
-			outCollection(furn, count); //with your methods
-			break;
-		case '9':
-			count = ReadFromBinaryFile(furn);//and organise prototypes (Forgot this word)
-			break;
-		case '0':
-			writeToBinaryFile(furn, count);//pleeeease
-			break;
-		case '8':
-			thirdTask(furn, count); //Good like
-			break;
-		case 'q':
-			return; //You is the best, my dove <3
-		default:
-			return;
-		}
+int ReadFromBinaryFile(Furniture *furn) {  //for reading
+	printf("Enter the name of file: ");  // four 
+	char path[MAX_LEN];					//lines
+	gets_s(path);							//to enter
+	strcat(path, ".dat");				//the name
+
+	FILE *f = fopen(path, "rb");  //opening
+	int i = 0;
+	while (!feof(f)){  //while not end
+		fread(furn + i++, sizeof(Furniture), 1, f);  //read
 	}
+	fclose(f); //close
+	return i - 1;  //return the size with little feature. Dont ask. It works
 }
 
-int _tmain(int argc, _TCHAR* argv[])  //short main method
-{
-	Furniture furn[COUNT]; //Lets leave all jokes about "short" :(
-	mainMenu(furn);
-	system("pause");//and my English
-	return 0;//I hope, nobody died while I was writing it.
-}
+void writeToBinaryFile(Furniture *furn, int count) {  //method to write data to new BINARY (Wooooow!!!! Fantastic!!1) file
+	printf("Enter the name of file: ");  // four 
+	char path[MAX_LEN];					//lines
+	gets_s(path);							//to enter
+	strcat(path, ".dat");				//the name
+
+	FILE *f = fopen(path, "wb");	//opening
+	fwrite(furn, sizeof(Furniture), count, f);  //writing
+	fclose(f); //closing
+}  //fantastic, right?
+
+
+
+
 
