@@ -1,11 +1,11 @@
 // lab_9.cpp : Defines the entry point for the console application.
-//
+// MY_MAIN
 
 #include "stdafx.h"
+#include <stdlib.h>
 #include <iostream>
 #include <string.h>
 #include <conio.h>
-using namespace std;
 
 const int MAX_LEN = 50;
 
@@ -180,11 +180,22 @@ int fillCollection(Furniture *head){ //method for filling collection, my own exa
 	strcpy(head[3].spec.chair.typeBack, "Soft");
 	strcpy(head[3].spec.chair.typeSeat, "Soft");
 
-	return 4;//G
+	strcpy(head[4].name, "OneMore");
+	strcpy(head[4].typeMain, "Chair");
+	strcpy(head[4].typeAdd, "work");
+	strcpy(head[4].matherial, "Plastic and skin");//N
+	strcpy(head[4].color, "Black");
+	head[4].price = 300;
+	head[4].amountOfProduct = 3;
+	strcpy(head[4].spec.chair.colorUpholstery, "Red");
+	strcpy(head[4].spec.chair.typeBack, "Soft");
+	strcpy(head[4].spec.chair.typeSeat, "Soft");
+
+	return 5;//G
 }
 
 void outCollection(Furniture *furn, int count) { // out collection
-	printf("Collection:\n\n");
+	printf("Collection:\n");
 	for (int i = 0; i < count; ++i) {
 		outElement(furn, i);
 	}
@@ -192,66 +203,65 @@ void outCollection(Furniture *furn, int count) { // out collection
 
 void addElement(Furniture* furn, int &count) {
 	if (count < MAX_LEN) {
-		cout << "Input features of product you want to add.\n";
-
+		std::cout << "Input features of product you want to add.\n";
 		char name_new[MAX_LEN];
-		cout << "name: ";
-		cin >> name_new;
+		std::cout << "name: ";
+		std::cin >> name_new;
 		strcpy(furn[count].name, name_new);
 
 		char main_new[MAX_LEN];
-		cout << "Chair or Table? : ";
-		cin >> main_new;
+		std::cout << "Chair or Table? : ";
+		std::cin >> main_new;
 		strcpy(furn[count].typeMain, main_new);
 
 		char type_new[MAX_LEN];
-		cout << "type: ";
-		cin >> type_new;
+		std::cout << "type: ";
+		std::cin >> type_new;
 		strcpy(furn[count].typeAdd, type_new);
 
 		char matherial_new[MAX_LEN];
-		cout << "material: ";
-		cin >> matherial_new;
+		std::cout << "material: ";
+		std::cin >> matherial_new;
 		strcpy(furn[count].matherial, matherial_new);
 
 		char color_new[MAX_LEN];
-		cout << "color: ";
-		cin >> color_new;
+		std::cout << "color: ";
+		std::cin >> color_new;
 		strcpy(furn[count].color, color_new);
 
 		int price_new;
-		cout << "price: ";
-		cin >> price_new;
+		std::cout << "price: ";
+		std::cin >> price_new;
 		furn[count].price = price_new;
 
 		int amount_new;
-		cout << "amount: ";
-		cin >> amount_new;
+		std::cout << "amount: ";
+		std::cin >> amount_new;
 		furn[count].amountOfProduct = amount_new;
 
-		if (!strcmp(main_new, "Chair")) {
+		if (!strcmp(_strlwr(main_new), "chair")) {
 
 			char color2_new[MAX_LEN];
-			cout << "color of Upholstery: ";
-			cin >> color2_new;
+			std::cout << "color of Upholstery: ";
+			std::cin >> color2_new;
 			strcpy(furn[count].spec.chair.colorUpholstery, color2_new);
 
 			char back_new[MAX_LEN];
-			cout << "type of back: ";
-			cin >> back_new;
+			std::cout << "type of back: ";
+			std::cin >> back_new;
 			strcpy(furn[count].spec.chair.typeBack, back_new);
 
 			char seat_new[MAX_LEN];
-			cout << "type of seat: ";
-			cin >> seat_new;
+			std::cout << "type of seat: ";
+			std::cin >> seat_new;
 			strcpy(furn[count].spec.chair.typeSeat, seat_new);
 
 		}
 
 		else {
 			char tableType_new[MAX_LEN];
-			cout << "type of Table: ";
-			cin >> tableType_new;
+			std::cout << "type of Table: ";
+			std::cin >> tableType_new;
 			strcpy(furn[count].spec.table.typeTable, tableType_new);
 		}
 
@@ -259,22 +269,29 @@ void addElement(Furniture* furn, int &count) {
 	}
 
 	else {
-		cout << "\nThere is no space anymore. \n";
+		std::cout << "\nThere is no space anymore. \n";
 	}
+
+	system("cls");
+	outCollection(furn, count);
 	system("pause");
 	system("cls");
-
 }
 
 void deleteElement(Furniture* furn, int &count) {
+	outCollection(furn, count);
 	int num;
-	printf("What element would you like to remove?");
+	printf("\nWhat element would you like to remove?");
 	scanf("%d", &num);
 	num--;
 	count--;
 	for (int i = num; i < count; ++i) {
 		furn[i] = furn[i + 1];
 	}
+	system("cls");
+	outCollection(furn, count);
+	system("pause");
+	system("cls");
 }
 
 void editElement(Furniture* furn, int count) {
@@ -301,7 +318,7 @@ void editElement(Furniture* furn, int count) {
 		scanf("%d", &furn[element].price);
 		printf("Enter Count of product: ");
 		scanf("%d", &furn[element].amountOfProduct);
-		if (strcmp(furn[element].typeMain, "Chair") == 0) {
+		if (strcmp(_strlwr(furn[element].typeMain), "chair") == 0) {
 			printf("Enter Type of back: ");
 			scanf("%s", &furn[element].spec.chair.typeBack);
 			printf("Enter Type of seat: ");
@@ -309,7 +326,7 @@ void editElement(Furniture* furn, int count) {
 			printf("Enter Color of Upholstery: ");
 			scanf("%s", &furn[element].spec.chair.colorUpholstery);
 		}
-		if (strcmp(furn[element].typeMain, "Table") == 0) {
+		if (strcmp(_strlwr(furn[element].typeMain), "table") == 0) {
 			printf("Enter Type of table: ");
 			scanf("%s", &furn[element].spec.table.typeTable);
 			printf("Enter Size of table: \n");
@@ -325,35 +342,70 @@ void editElement(Furniture* furn, int count) {
 		printf("You entered incorrect count\n");
 		system("pause");
 	}
+	system("cls");
+	outCollection(furn, count);
+	system("pause");
 	system("cls");																				  //COMENTED SYSTEM
 }
 
 void firstTask(Furniture *furn, int count) {
-	outCollection(furn, count);
+	/*outCollection(furn, count);*/     //Kostya if you want to output collection you can, but don`t do it OK?
 	printf("\nFirst task.\n\n");
-	printf("Enter the type of chair: ");
+	char types[MAX_LEN][MAX_LEN];
+	int k = 0;
+	bool e = false;
+	for (int i = 0; i < count; ++i) {
+		if ((strcmp(_strlwr(furn[i].typeMain), "chair") == 0)) {
+			bool flag = true;
+			for (int j = 0; j < k; ++j) {
+				if (strcmp(furn[i].typeAdd, types[j]) == 0) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				strcpy(types[k++], furn[i].typeAdd);
+			}
+		}
+	}
+	printf("Type of chairs: %s", types[0]);
+	for (int i = 1; i < k; ++i)
+		printf(", %s", types[i]);
+	printf("\n\nEnter the type of chair: ");
 	char type[MAX_LEN];
 	int count_chairs = 0;
 	int price_chairs = 0;
 	gets_s(type);
 	for (int i = 0; i < count; ++i) {
-		if ((strcmp(furn[i].typeMain, "Chair") == 0) &&
-			(strcmp(furn[i].typeAdd, type) == 0)) {
+		if ((strcmp(_strlwr(furn[i].typeMain), "chair") == 0) &&
+			(strcmp(_strlwr(furn[i].typeAdd), _strlwr(type)) == 0)) {
+			e = true;
+			printf("\n__________________________________________________\n");
+			printf("Name: %s\n", furn[i].name);
+			printf("Price: %d\n", furn[i].price);
+			price_chairs += furn[i].price*furn[i].amountOfProduct;
+			printf("Count of chairs: %d\n", furn[i].amountOfProduct);
 			count_chairs += furn[i].amountOfProduct;
-			price_chairs += furn[i].price;
 		}
 	}
-	printf("Count of %s chairs is: %d\n", type, count_chairs);
-	printf("Price of %s chairs is: %d\n", type, price_chairs);
+	if (!e)
+		printf("\nYou entered incorrect type\n");
+	else {
+		printf("\nGeneral price of %s chairs is: %d\n", type, price_chairs);
+		printf("Count of %s chairs is: %d\n", type, count_chairs);
+	}
+	printf("\n");
+	system("pause");
+	system("cls");
 }
 
 void secondTask(Furniture* furn, int count){
 	printf("Second task.\n\n");
 	for (int i = 0; i < count; ++i) {
-		if (!strcmp(furn[i].typeMain, "Chair") &&
-			!strcmp(furn[i].spec.chair.typeBack, "Soft") &&
-			!strcmp(furn[i].spec.chair.typeSeat, "Soft") &&
-			!strcmp(furn[i].spec.chair.colorUpholstery, "Red") &&
+		if (!strcmp(_strlwr(furn[i].typeMain), "chair") &&
+			!strcmp(_strlwr(furn[i].spec.chair.typeBack), "soft") &&
+			!strcmp(_strlwr(furn[i].spec.chair.typeSeat), "soft") &&
+			!strcmp(_strlwr(furn[i].spec.chair.colorUpholstery), "red") &&
 			furn[i].price >= 100 && furn[i].price <= 500) {
 			outElement(furn, i);
 		}
@@ -365,21 +417,24 @@ void secondTask(Furniture* furn, int count){
 
 void thirdTask(Furniture *furn, int count){ //My task, I dont want to discuss it
 	printf("Third task.\n");  // or want
+
 	printf("Enter the name of new file: ");
 	char path[MAX_LEN]; //hihi
 	gets_s(path);
 	strcat(path, ".dat");  //enter the name of file
+	FILE *f = fopen(path, "wb"); //opening
+	
 	printf("\n");
 	outCollection(furn, count);  //out collection to choose proper size of table
+
 	printf("\nEnter the size of needing tables (height, width, lenght):\n"); //choose proper size of table
 	sizes size;
 	scanf("%d%d%d", &size.height, &size.width, &size.lenght);
 
-	FILE *f = fopen(path, "wb"); //opening
 	for (int i = 0; i < count; ++i) {
-		if ((strcmp(furn[i].typeMain, "Table") == 0) && //HUUUUUUUUUUUU
-			(strcmp(furn[i].spec.table.typeTable, "Direct") == 0) && //GEEEEEEEEE
-			(strcmp(furn[i].typeAdd, "computer") == 0) &&
+		if ((strcmp(_strlwr(furn[i].typeMain), "table") == 0) && //HUUUUUUUUUUUU
+			(strcmp(_strlwr(furn[i].spec.table.typeTable), "direct") == 0) && //GEEEEEEEEE
+			(strcmp(_strlwr(furn[i].typeAdd), "computer") == 0) &&
 			furn[i].spec.table.size.height == size.height &&  //Condition
 			furn[i].spec.table.size.width == size.width &&
 			furn[i].spec.table.size.lenght == size.lenght) { //dont read it
@@ -421,14 +476,14 @@ void writeToBinaryFile(const char* path, Furniture *furn, int count) {  //method
 
 
 void outElement(Furniture* furn, int i) {
-	printf("Name: %s\nType: %s %s\nMatherial: %s\nColor: %s\nPrice: %d\nCount of product: %d\n\n",
-		furn[i].name, furn[i].typeMain, furn[i].typeAdd, furn[i].matherial, furn[i].color, furn[i].price, furn[i].amountOfProduct); //for both items the same
-	if (strcmp(furn[i].typeMain, "Chair") == 0) {
-		printf("Type of back: %s\nType of seat: %s\nColor of Upholstery: %s\n__________________________________________________\n",   //if item is a CHAIR
+	printf("\n%2d. Name: %s\n    Type: %s %s\n    Matherial: %s\n    Color: %s\n    Price: %d\n    Count of product: %d\n\n",
+		i + 1, furn[i].name, furn[i].typeMain, furn[i].typeAdd, furn[i].matherial, furn[i].color, furn[i].price, furn[i].amountOfProduct); //for both items the same
+	if (strcmp(_strlwr(furn[i].typeMain), "chair") == 0) {
+		printf("    Type of back: %s\n    Type of seat: %s\n    Color of Upholstery: %s\n__________________________________________________\n",   //if item is a CHAIR
 			furn[i].spec.chair.typeBack, furn[i].spec.chair.typeSeat, furn[i].spec.chair.colorUpholstery);
 	}
-	if (strcmp(furn[i].typeMain, "Table") == 0) {
-		printf("Type of table: %s\nSize of table:\n\tHeight: %d\n\tWidth: %d\n\tLenght: %d\n__________________________________________________\n", //if item is a TABLE
+	if (strcmp(_strlwr(furn[i].typeMain), "table") == 0) {
+		printf("    Type of table: %s\n    Size of table:\n\t    Height: %d\n\t    Width: %d\n\t    Lenght: %d\n__________________________________________________\n", //if item is a TABLE
 			furn[i].spec.table.typeTable, furn[i].spec.table.size.height, furn[i].spec.table.size.width, furn[i].spec.table.size.lenght);
 	}
 }
